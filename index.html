@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>밍밍 블로그 발표자료</title>
+<style>
+:root {
+  --bg:#fff8f1;
+  --ink:#241b17;
+  --muted:#7a6b62;
+  --card:rgba(255,255,255,.78);
+  --line:rgba(50,35,25,.12);
+  --accent:#ff8d9e;
+  --accent2:#ffd166;
+  --accent3:#7bdff2;
+  --shadow:0 24px 70px rgba(78,50,35,.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Segoe UI,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 10%,#fff 0,#fff4e8 32%,#ffeaf0 68%,#eaf8ff 100%);overflow:hidden}
+.deck{height:100vh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{position:relative;min-height:100vh;scroll-snap-align:start;padding:5.2vh 5.4vw;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 20% 20%,rgba(255,209,102,.36),transparent 24%),radial-gradient(circle at 80% 10%,rgba(123,223,242,.32),transparent 22%),radial-gradient(circle at 70% 78%,rgba(255,141,158,.3),transparent 26%);filter:blur(10px);animation:floatBg 14s ease-in-out infinite alternate}
+@keyframes floatBg{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.04)}}
+.kicker{letter-spacing:.18em;font-weight:900;font-size:.78rem;color:#d35a78;text-transform:uppercase;margin:0 0 16px}
+h1,h2,p{margin-top:0}
+h1{font-size:clamp(3rem,8vw,7.6rem);line-height:.92;letter-spacing:-.07em;margin-bottom:24px}
+h2{font-size:clamp(2.2rem,4.8vw,5.2rem);line-height:.96;letter-spacing:-.06em;margin-bottom:20px}
+.cover{justify-content:flex-start}
+.mosaic{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:25vh;gap:10px;padding:10px;opacity:.55;filter:saturate(1.05)}
+.mosaic img{width:100%;height:100%;object-fit:cover;border-radius:28px;animation:ken 18s ease-in-out infinite alternate}
+.mosaic img:nth-child(2n){transform:translateY(20px)}
+@keyframes ken{from{object-position:center;transform:scale(1)}to{object-position:45% 55%;transform:scale(1.08)}}
+.cover-panel{position:relative;z-index:2;width:min(900px,88vw);padding:54px;border:1px solid rgba(255,255,255,.7);background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(255,248,241,.72));backdrop-filter:blur(22px);border-radius:42px;box-shadow:var(--shadow)}
+.cover-panel p{font-size:1.28rem;color:var(--muted);line-height:1.65;max-width:760px}
+.cover-tags{display:flex;gap:12px;flex-wrap:wrap}
+.cover-tags span,.meta-row span,.chapter-stat{display:inline-flex;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.66);border-radius:999px;padding:9px 14px;font-weight:800;color:#5c4a42}
+.overview-card,.final-card{position:relative;z-index:2;width:min(1180px,92vw);padding:52px;border-radius:42px;background:var(--card);box-shadow:var(--shadow);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.7)}
+.arc,.final-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.arc div,.final-grid div,.mini{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:0 16px 45px rgba(90,50,30,.08)}
+.arc b{display:inline-flex;width:42px;height:42px;border-radius:16px;background:#241b17;color:white;align-items:center;justify-content:center;margin-bottom:18px}
+.arc strong,.final-grid b{display:block;font-size:1.42rem;margin-bottom:9px}
+.arc span,.final-grid span{color:var(--muted);line-height:1.55}
+.chapter{display:grid;grid-template-columns:.8fr 1fr;gap:36px;align-items:center}
+.big-emoji{position:absolute;left:4vw;top:6vh;font-size:24vw;opacity:.12;filter:blur(.4px);animation:wiggle 8s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.chapter-copy{position:relative;z-index:2;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.8);border-radius:42px;padding:46px;box-shadow:var(--shadow)}
+.chapter-copy h1{font-size:clamp(3rem,5.8vw,6.2rem)}
+.chapter-copy p{font-size:1.25rem;line-height:1.7;color:var(--muted)}
+.mini-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-height:76vh;overflow:auto;padding-right:6px}
+.mini b{font-size:1.05rem;color:#d35a78}
+.mini span{display:block;margin-top:6px;color:#51443d;font-weight:800;line-height:1.35}
+.post-layout{position:relative;z-index:2;width:min(1280px,94vw);display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:stretch}
+.story-card,.visual-card{border-radius:42px;background:var(--card);border:1px solid rgba(255,255,255,.75);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
+.story-card{padding:44px;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-weight:950;letter-spacing:.12em;color:#d35a78;margin-bottom:22px}
+.summary{font-size:clamp(1.12rem,1.7vw,1.55rem);line-height:1.72;color:#4a3d36;margin-bottom:26px}
+.points{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.points li{position:relative;padding:15px 18px 15px 46px;border-radius:18px;background:rgba(255,255,255,.72);border:1px solid var(--line);font-weight:800;line-height:1.5}
+.points li::before{content:"✦";position:absolute;left:18px;color:#ff8d9e}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;font-size:.92rem}
+.visual-card{padding:18px;min-height:520px;display:flex;align-items:center;justify-content:center}
+.gallery{width:100%;height:100%;display:grid;gap:14px}
+.gallery.one{grid-template-columns:1fr}
+.gallery.two{grid-template-columns:1fr 1fr}
+.gallery.three{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.gallery.three figure:first-child{grid-row:span 2}
+figure{margin:0;position:relative;overflow:hidden;border-radius:30px;background:#fff0e7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+figure img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s ease}
+figure:hover img{transform:scale(1.05)}
+figcaption{position:absolute;left:14px;bottom:14px;background:rgba(36,27,23,.68);color:white;border-radius:999px;padding:6px 11px;font-weight:900;font-size:.8rem;backdrop-filter:blur(8px)}
+figure.broken::after{content:"이미지 로딩 실패";position:absolute;inset:0;display:grid;place-items:center;font-weight:900;color:#7a6b62;background:linear-gradient(135deg,#fff3e3,#ffe8ef)}
+.no-photo{height:100%;min-height:440px;border-radius:30px;display:grid;place-items:center;background:repeating-linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,255,255,.6) 16px,rgba(255,209,102,.18) 16px,rgba(255,209,102,.18) 32px);border:1px dashed rgba(80,60,45,.25)}
+.no-photo span{font-size:1.5rem;font-weight:950;color:#6d5a50}
+.slide-bg{position:absolute;inset:0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-end;padding:3vh 4vw;color:rgba(36,27,23,.06);font-weight:1000;font-size:12vw;line-height:1}
+.finale p{font-size:1.35rem;line-height:1.75;color:#5c4a42;max-width:1000px}
+.progress{position:fixed;left:0;top:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));width:0;z-index:50;box-shadow:0 4px 16px rgba(255,141,158,.55)}
+.controls{position:fixed;right:20px;bottom:18px;z-index:60;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(16px);border-radius:999px;padding:10px;box-shadow:0 12px 34px rgba(40,30,24,.14)}
+.controls button{border:0;background:#241b17;color:white;border-radius:999px;padding:12px 15px;font-weight:950;cursor:pointer}
+.counter{font-weight:950;color:#4d4039;min-width:72px;text-align:center}
+.dots{position:fixed;left:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:40;max-height:82vh;overflow:hidden}
+.dot{width:7px;height:7px;border-radius:999px;border:0;background:rgba(36,27,23,.18);padding:0;cursor:pointer}
+.dot.active{height:22px;background:#241b17}
+.reveal{opacity:0;transform:translateY(32px) scale(.985);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:translateY(0) scale(1)}
+.delay-1{transition-delay:.16s}
+@media (max-width:900px){
+  html,body{overflow:auto}
+  .deck{overflow-y:auto}
+  .slide{padding:32px 18px;min-height:auto;scroll-snap-align:start}
+  .cover-panel,.overview-card,.final-card,.chapter-copy,.story-card{padding:28px;border-radius:28px}
+  .post-layout,.chapter{grid-template-columns:1fr}
+  .visual-card{min-height:360px;border-radius:28px}
+  .arc,.final-grid,.mini-grid{grid-template-columns:1fr}
+  .dots{display:none}
+  .controls{left:50%;right:auto;transform:translateX(-50%);bottom:10px}
+  h1{font-size:3.2rem} h2{font-size:2.45rem}
+}
+@media print{
+  html,body{overflow:visible;background:white}
+  .deck{height:auto;overflow:visible}
+  .slide{page-break-after:always;min-height:100vh}
+  .controls,.dots,.progress{display:none}
+}
+
+
+/* === Compact readable revision === */
+html,body{font-size:15px;}
+.slide{padding:3.2vh 4.2vw;}
+.kicker{font-size:.68rem;margin:0 0 10px;letter-spacing:.14em;}
+h1{font-size:clamp(2.15rem,5.1vw,4.9rem);line-height:1.02;letter-spacing:-.055em;margin-bottom:16px;}
+h2{font-size:clamp(1.45rem,2.75vw,2.9rem);line-height:1.08;letter-spacing:-.045em;margin-bottom:16px;}
+.cover-panel{width:min(820px,84vw);padding:36px 40px;border-radius:34px;}
+.cover-panel h1{font-size:clamp(2.55rem,6.3vw,5.6rem);line-height:.98;margin-bottom:16px;}
+.cover-panel p{font-size:1.05rem;line-height:1.55;}
+.cover-tags span,.meta-row span,.chapter-stat{padding:7px 11px;font-size:.82rem;}
+.overview-card,.final-card{width:min(1080px,90vw);padding:36px 40px;border-radius:34px;}
+.arc,.final-grid{gap:14px;margin-top:22px;}
+.arc div,.final-grid div,.mini{border-radius:22px;padding:18px;}
+.arc b{width:34px;height:34px;border-radius:12px;margin-bottom:12px;}
+.arc strong,.final-grid b{font-size:1.15rem;margin-bottom:6px;}
+.arc span,.final-grid span{font-size:.94rem;line-height:1.42;}
+.chapter{grid-template-columns:.72fr 1fr;gap:24px;}
+.chapter-copy{padding:32px 34px;border-radius:34px;}
+.chapter-copy h1{font-size:clamp(2.15rem,4.2vw,4.2rem);line-height:1.04;}
+.chapter-copy p{font-size:1.02rem;line-height:1.55;}
+.big-emoji{font-size:19vw;}
+.mini-grid{gap:10px;max-height:72vh;}
+.mini{padding:13px 15px;}
+.mini b{font-size:.88rem;}
+.mini span{font-size:.92rem;line-height:1.28;}
+.post-layout{width:min(1180px,92vw);grid-template-columns:1.05fr .95fr;gap:20px;align-items:center;max-height:88vh;}
+.story-card,.visual-card{border-radius:32px;}
+.story-card{padding:30px 34px;min-height:0;}
+.eyebrow{font-size:.78rem;letter-spacing:.09em;margin-bottom:14px;line-height:1.35;}
+.summary{font-size:clamp(.96rem,1.28vw,1.18rem);line-height:1.58;margin-bottom:18px;}
+.points{gap:8px;}
+.points li{padding:10px 13px 10px 36px;border-radius:14px;font-size:.92rem;line-height:1.38;}
+.points li::before{left:14px;}
+.meta-row{gap:8px;margin-top:16px;font-size:.78rem;}
+.visual-card{padding:12px;min-height:0;height:min(64vh,500px);}
+.gallery{gap:10px;}
+figure{border-radius:24px;}
+figcaption{left:10px;bottom:10px;padding:5px 9px;font-size:.7rem;}
+.no-photo{min-height:300px;border-radius:24px;}
+.no-photo span{font-size:1.08rem;}
+.slide-bg{padding:2vh 3vw;font-size:8.5vw;}
+.finale p{font-size:1.05rem;line-height:1.55;}
+.controls{right:16px;bottom:14px;padding:8px;}
+.controls button{padding:9px 12px;font-size:.86rem;}
+.counter{min-width:62px;font-size:.86rem;}
+.dots{left:10px;gap:5px;}
+.dot{width:6px;height:6px;}
+.dot.active{height:18px;}
+@media (max-height:760px){
+  html,body{font-size:14px;}
+  .slide{padding:2.2vh 3.4vw;}
+  .cover-panel,.overview-card,.final-card,.chapter-copy,.story-card{padding:24px 28px;}
+  h1{font-size:clamp(1.9rem,4.5vw,4.1rem);}
+  h2{font-size:clamp(1.25rem,2.35vw,2.35rem);}
+  .summary{line-height:1.48;margin-bottom:14px;}
+  .points li{padding-top:8px;padding-bottom:8px;font-size:.86rem;}
+  .visual-card{height:min(58vh,430px);}
+  .mini-grid{max-height:68vh;}
+}
+@media (max-width:900px){
+  .slide{padding:24px 14px;}
+  h1{font-size:2.25rem;}
+  h2{font-size:1.8rem;}
+  .cover-panel,.overview-card,.final-card,.chapter-copy,.story-card{padding:22px;border-radius:24px;}
+  .post-layout{max-height:none;width:100%;gap:14px;}
+  .visual-card{height:auto;min-height:260px;}
+  .summary{font-size:.98rem;}
+}
+
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<main class="deck" id="deck">
+
+<section class="slide cover">
+  <div class="mosaic"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjAzMTdfNTkg/MDAxNzczNjgxMjE4OTYy.m6H8HMY5QqEWlSfwG1qKow5YXUt8Rk6ax_8OSfyEgAQg.X8Z4Ky5fdx8JhXjEcRtmo1ahfUxfO6vfQxtgVfqwYkkg.JPEG/IMG_7710.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDFfMjYg/MDAxNzc1MDQ5OTY1NTE2.sjQfpZkDDIyhA41SBcN1pkaq7BRa37KRN9vdwamwipEg.jCRjZzcbtRvExWDOZKN54g9rhp7Xph9jNYEnGdHgphMg.JPEG/output_3532815493.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfMTY5/MDAxNzc1MjIyNTMwMzY1.O-9ZKdW2GQXQi1PQoRFhTQqAqLHi10ufQ42Z6FFKOrsg.KL5L937ZZT5YgQ6V_D-Paj4u78VFEW43ahs3X9GLIn4g.JPEG/output_2102220110.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfODQg/MDAxNzc1MjIyNTMwNDY2.yQoek9lTyqxxuv0nP2a834EuLp8mOyq264Jiuf4swqkg.5dfLmad6NjqJY91PTzpqo_TYaCJ4PQO_YRA1C4He0scg.JPEG/IMG_7888.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfMTk0/MDAxNzc1MjIyODE4MDE4.L5IRmX1fhefURJ47vwPFVxLtwGNAPJrINF-ge8NR5TQg.1vOBHk_Jj6WPvibyjd6lRvUkI50rJ-xxModSEexS-SAg.JPEG/output_2547658453.jpg?type=w80_blur" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDRfMjcz/MDAxNzc1Mjk5OTY1Mjgz.1syvlEARJpJGOcbYFvIpXMSKDT5C6DxONW1cGkmPuykg.0pVM83Eaho_7ygJY4Xdxy1FAoe31ZO92J-fUpT6Retog.JPEG/IMG_7904.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfMTI1/MDAxNzc1NDc2ODE4MDAz.JSsQpy7wmgYVeRzuCR__u86ZarbF8Z5HBU8L91HIp3Ag.GbWzoVzNuS5FfND1Dna-AcpfpsOLo_UPHLStlosdMjIg.JPEG/output_2323687134.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfNzIg/MDAxNzc1NDc2ODY5Mzgy.hjlsvWKmvKSSPByX7Mu-ZJ2bfBbdkqsycBJal_iFcKMg.08HMgevTjgtwq2e8JZPJhYvRoyM6trsYInYNw2pnNHkg.JPEG/IMG_7916.jpg?type=w400" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfNzEg/MDAxNzc1NDc2ODY5Nzky.enVYYd7R1HldfG7aEaZj3Eozdwlb0e6TlAUfT8_P1Xwg.Vm88cZLPlH-xdw3S1rYE2JJsPksRkBqI0dO7cXukujEg.JPEG/IMG_7915.jpg?type=w400" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTBfODEg/MDAxNzc1Nzk0MTE2ODk2.XIIP_8v65PBQHu6W4-Cuv_22TjkmY_KzggM2s-kCQxEg.LKnDR87bRbhrLcPUQCpLWiMPrJGsGxq2zUF0vcO_wgQg.JPEG/IMG_7931.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMTA1/MDAxNzgxMDI1MzI3MTYz.J035x49nGka6JjcdLI2-ftEdFaeoFFOMWFxW4QKAnFEg.OIypn1Ge-cC_839xP8S0L7O-y9JNbITZlAGy9ISEeXcg.JPEG/output_677801649.jpg?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTJfMjI0/MDAxNzc1OTk2Mjg4NzMz.dg8VYqt_DV0MMma7CZ436IoM8FsWHeeLAw9WYwtYVTcg.Tq7FzY9-u-YoNanmu3P_gx1THVqhfKksA1yJaTf_WHsg.JPEG/IMG_7968.JPG?type=w800" alt="cover image" loading="lazy" onerror="this.style.display='none'"></div>
+  <div class="cover-panel reveal">
+    <p class="kicker">MINGMING BLOG PRESENTATION</p>
+    <h1>걱정 인형의<br>긍정심리학 일기</h1>
+    <p>2026.03.17 →2026.06.03 · 총 31개 블로그 HTML을 날짜별 스토리로 재구성</p>
+    <div class="cover-tags"><span>교생실습</span><span>졸업시험</span><span>급식 연대기</span><span>일상 회복</span></div>
+  </div>
+</section>
+<section class="slide overview">
+  <div class="overview-card reveal">
+    <p class="kicker">오늘의 발표 흐름</p>
+    <h1>한 학기의 기록은 이렇게 흘러갑니다</h1>
+    <div class="arc">
+      <div><b>1막</b><strong>걱정의 시작</strong><span>과제·교생·졸업시험이 한꺼번에 등장</span></div>
+      <div><b>2막</b><strong>학교 생존기</strong><span>첫 수업, 급식, 멘토링, 소방훈련까지</span></div>
+      <div><b>3막</b><strong>다시 일상으로</strong><span>합격, 외출, 가족, 여행, 회복</span></div>
+    </div>
+  </div>
+</section>
+<section class="slide chapter">
+  <div class="big-emoji">📚</div>
+  <div class="chapter-copy reveal">
+    <p class="kicker">CHAPTER</p>
+    <h1>1막. 시작 전부터 이미 바쁜 사람</h1>
+    <p>3월은 긍정심리학 프로젝트의 선언과 교생 전 걱정이 겹친 프롤로그입니다.</p>
+    <div class="chapter-stat">4개 글 · 프로젝트 시작과 교생 준비</div>
+  </div>
+  <div class="mini-grid reveal delay-1"><div class="mini"><b>0317</b><span>프롤로그: 긍정심리학 일기 프로젝트 오픈</span></div><div class="mini"><b>0327</b><span>걱정 인형 재가동</span></div><div class="mini"><b>0330</b><span>교생 1일차: 너무 일찍 도착한 사람</span></div><div class="mini"><b>0331</b><span>3월 종료와 2일차 퀘스트</span></div></div>
+</section>
+<section class="slide post" data-key="0317">
+  <div class="slide-bg"><span>📚</span><span>0317</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 01 · 2026. 3. 17. 2:16 </div>
+      <h2>프롤로그: 긍정심리학 일기 프로젝트 오픈</h2>
+      <p class="summary">마지막 학기 과제로 “매일 일기”를 시작한다. 기록형 인간이 감정일기를 해보겠다고 마음먹고, 교생·과제·졸업시험이 몰려오는 4월을 앞두고도 “그래도 잘 지내보자”로 첫 장을 연다.</p>
+      <ul class="points"><li>마지막 학기 과제 때문에 블로그 일기 시작</li><li>스케줄러형 인간의 감정 기록 도전</li><li>교생·과제·졸업시험이 다가오는 4월 예고</li><li>해리 두 마리로 귀엽게 마무리</li></ul>
+      <div class="meta-row"><span>원문 문장 16개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjAzMTdfNTkg/MDAxNzczNjgxMjE4OTYy.m6H8HMY5QqEWlSfwG1qKow5YXUt8Rk6ax_8OSfyEgAQg.X8Z4Ky5fdx8JhXjEcRtmo1ahfUxfO6vfQxtgVfqwYkkg.JPEG/IMG_7710.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0327">
+  <div class="slide-bg"><span>😭</span><span>0327</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 02 ·2026. 3. 27. 22:44</div>
+      <h2>걱정 인형 재가동</h2>
+      <p class="summary">공부가 너무 어렵고 “이게 맞나?”라는 불안이 커진 날. 다음 주 교생까지 겹치며 걱정 인형 모드가 다시 켜진다.</p>
+      <ul class="points"><li>공부 난이도에 멘탈 흔들림</li><li>수능이 쉬웠다고 느낄 정도의 압박</li><li>교생 시작 전 불안감 상승</li><li>공부가 너무 힘들당</li></ul>
+      <div class="meta-row"><span>원문 문장 4개 요약</span><span>이미지 0개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="no-photo"><span>오늘은 텍스트만 남긴 날</span></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0330">
+  <div class="slide-bg"><span>🪽</span><span>0330</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 03 ·2026. 3. 30. 17:25</div>
+      <h2>교생 1일차: 너무 일찍 도착한 사람</h2>
+      <p class="summary">첫 교생날, 늦을까 봐 8시도 전에 학교 근처에 도착한다. 전문상담 교생으로 상담실에서 강의안을 짜고, 친절한 선생님들과 친구 도움 덕분에 첫날을 무사히 통과한다.</p>
+      <ul class="points"><li>첫 교생 출근</li><li>학교와 상담실 적응 시작</li><li>강의안 작성과 친구들의 도움</li><li>1/20 완료, 19일 남음</li></ul>
+      <div class="meta-row"><span>원문 문장 9개 요약</span><span>이미지 0개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="no-photo"><span>오늘은 텍스트만 남긴 날</span></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0331">
+  <div class="slide-bg"><span>🕐</span><span>0331</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 04 · 2026. 3. 31. 23:01 </div>
+      <h2>3월 종료와 2일차 퀘스트</h2>
+      <p class="summary">3월의 마지막 날, 교생 2일차가 끝났다. 시간이 빨리 가는 학교 속에서 적응은 생각보다 빠르지만, 졸업시험 걱정은 계속 따라붙는다.</p>
+      <ul class="points"><li>2026년 3개월이 순삭된 기분</li><li>교생 2일차 완료</li><li>적응력 상승 체감</li><li>졸업시험 불안 동반</li></ul>
+      <div class="meta-row"><span>원문 문장 12개 요약</span><span>이미지 0개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="no-photo"><span>오늘은 텍스트만 남긴 날</span></div>
+    </aside>
+  </div>
+</section>
+<section class="slide chapter">
+  <div class="big-emoji">🧑‍🏫</div>
+  <div class="chapter-copy reveal">
+    <p class="kicker">CHAPTER</p>
+    <h1>2막. 교생실습 RPG</h1>
+    <p>4월은 매일 퀘스트가 뜨는 달입니다. 첫 수업, 졸업시험, 급식, 멘토링, 마지막 날까지 감정선이 가장 풍부합니다.</p>
+    <div class="chapter-stat">20개 글 · 가장 촘촘한 실습 월간 기록</div>
+  </div>
+  <div class="mini-grid reveal delay-1"><div class="mini"><b>0401</b><span>만우절에도 피곤함은 진짜</span></div><div class="mini"><b>0403</b><span>잃어버린 0402와 금요일 생존기</span></div><div class="mini"><b>0404</b><span>시험 범위 착각 사건</span></div><div class="mini"><b>0406</b><span>월요병과 첫 수업 전야</span></div><div class="mini"><b>0407</b><span>첫 수업이 남긴 반성</span></div><div class="mini"><b>0409</b><span>백년화편과 아침 챙김의 기적</span></div><div class="mini"><b>0412</b><span>갑자기 여름, 갑자기 하루 삭제</span></div><div class="mini"><b>0413</b><span>불안과 설렘이 같이 있어도 괜찮다</span></div><div class="mini"><b>0414</b><span>블랙데이인데 과제는 블랙홀</span></div><div class="mini"><b>0415</b><span>10개 수업 완료와 멘토링 보물상자</span></div><div class="mini"><b>0416</b><span>급식이 갑자기 맛있어졌다</span></div><div class="mini"><b>0418</b><span>소방훈련과 군것질의 날</span></div><div class="mini"><b>0420</b><span>얼음국 아니고 만두국입니다</span></div><div class="mini"><b>0421</b><span>스타벅스 신메뉴와 닉네임 사태</span></div><div class="mini"><b>0422</b><span>실습 끝이 보인다</span></div><div class="mini"><b>0423</b><span>신사에서 먹고 웃고 좋은 소식 듣기</span></div><div class="mini"><b>0424</b><span>교생 마지막 날, 시원섭섭 엔딩</span></div><div class="mini"><b>0425</b><span>인스파이어 T1 홈그라운드 원정</span></div><div class="mini"><b>0428</b><span>4월 공백을 메우는 회복일</span></div><div class="mini"><b>0430</b><span>졸업시험 합격!</span></div></div>
+</section>
+<section class="slide post" data-key="0401">
+  <div class="slide-bg"><span>😵</span><span>0401</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 05 · 2026. 4. 1. 22:27 </div>
+      <h2>만우절에도 피곤함은 진짜</h2>
+      <p class="summary">거짓말 같은 만우절이지만 피곤함은 리얼. 급식 맛은 아직 미지수지만 배고픔 앞에서는 결국 먹게 되고, 공부도 실습도 아닌 어지러운 하루가 지나간다.</p>
+      <ul class="points"><li>피곤함은 만우절 농담 아님</li><li>급식 적응 중</li><li>공부와 실습 사이에서 흔들림</li><li>3/20 지점 통과</li></ul>
+      <div class="meta-row"><span>원문 문장 6개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDFfMjYg/MDAxNzc1MDQ5OTY1NTE2.sjQfpZkDDIyhA41SBcN1pkaq7BRa37KRN9vdwamwipEg.jCRjZzcbtRvExWDOZKN54g9rhp7Xph9jNYEnGdHgphMg.JPEG/output_3532815493.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0403">
+  <div class="slide-bg"><span>🧩</span><span>0403</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 06 · 2026. 4. 3. 22:28 </div>
+      <h2>잃어버린 0402와 금요일 생존기</h2>
+      <p class="summary">어제는 어디 갔는지 모르겠고, 0403은 드디어 한 주의 끝. 졸업시험과 강의안 수정 사이에서 이도저도 못했지만, 그래도 선생님들의 응원과 학교의 빠른 시계 덕분에 버틴다.</p>
+      <ul class="points"><li>0402 실종 사건</li><li>첫 주 마무리</li><li>졸업시험과 강의안 사이의 혼란</li><li>그래도 주변 도움으로 버팀</li></ul>
+      <div class="meta-row"><span>원문 문장 35개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfMTY5/MDAxNzc1MjIyNTMwMzY1.O-9ZKdW2GQXQi1PQoRFhTQqAqLHi10ufQ42Z6FFKOrsg.KL5L937ZZT5YgQ6V_D-Paj4u78VFEW43ahs3X9GLIn4g.JPEG/output_2102220110.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfODQg/MDAxNzc1MjIyNTMwNDY2.yQoek9lTyqxxuv0nP2a834EuLp8mOyq264Jiuf4swqkg.5dfLmad6NjqJY91PTzpqo_TYaCJ4PQO_YRA1C4He0scg.JPEG/IMG_7888.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDNfMTk0/MDAxNzc1MjIyODE4MDE4.L5IRmX1fhefURJ47vwPFVxLtwGNAPJrINF-ge8NR5TQg.1vOBHk_Jj6WPvibyjd6lRvUkI50rJ-xxModSEexS-SAg.JPEG/output_2547658453.jpg?type=w80_blur" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0404">
+  <div class="slide-bg"><span>😇</span><span>0404</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 07 · 2026. 4. 4. 19:44 </div>
+      <h2>시험 범위 착각 사건</h2>
+      <p class="summary">졸업시험 범위를 잘못 알고 답안을 쓰다가 막판에 급수정. 날씨는 너무 좋았지만 마음은 전혀 맑지 않았던, “문제를 잘 읽자”의 전조 같은 하루.</p>
+      <ul class="points"><li>시험 범위 착각</li><li>1분 전 답안 급수정</li><li>좋은 날씨와 별개로 기분은 흐림</li><li>통과를 간절히 바람</li></ul>
+      <div class="meta-row"><span>원문 문장 14개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDRfMjcz/MDAxNzc1Mjk5OTY1Mjgz.1syvlEARJpJGOcbYFvIpXMSKDT5C6DxONW1cGkmPuykg.0pVM83Eaho_7ygJY4Xdxy1FAoe31ZO92J-fUpT6Retog.JPEG/IMG_7904.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0406">
+  <div class="slide-bg"><span>☕</span><span>0406</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 08 · 2026. 4. 6. 21:01 </div>
+      <h2>월요병과 첫 수업 전야</h2>
+      <p class="summary">추운 봄날, 전날 강의를 몰아 듣고 출근해 눈뜨기부터 힘들다. 커피를 들고 강의안을 고치며 첫 수업 전 긴장과 걱정이 최고조로 오른다.</p>
+      <ul class="points"><li>봄인데 추운 날씨</li><li>강의 몰아듣기의 후폭풍</li><li>첫 수업 준비 압박</li><li>학생들에게 민폐일까 걱정</li></ul>
+      <div class="meta-row"><span>원문 문장 17개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfMTI1/MDAxNzc1NDc2ODE4MDAz.JSsQpy7wmgYVeRzuCR__u86ZarbF8Z5HBU8L91HIp3Ag.GbWzoVzNuS5FfND1Dna-AcpfpsOLo_UPHLStlosdMjIg.JPEG/output_2323687134.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfNzIg/MDAxNzc1NDc2ODY5Mzgy.hjlsvWKmvKSSPByX7Mu-ZJ2bfBbdkqsycBJal_iFcKMg.08HMgevTjgtwq2e8JZPJhYvRoyM6trsYInYNw2pnNHkg.JPEG/IMG_7916.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MDZfNzEg/MDAxNzc1NDc2ODY5Nzky.enVYYd7R1HldfG7aEaZj3Eozdwlb0e6TlAUfT8_P1Xwg.Vm88cZLPlH-xdw3S1rYE2JJsPksRkBqI0dO7cXukujEg.JPEG/IMG_7915.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0407">
+  <div class="slide-bg"><span>🧑‍🏫</span><span>0407</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 09 · 2026. 4. 7. 22:04 </div>
+      <h2>첫 수업이 남긴 반성</h2>
+      <p class="summary">드디어 첫 수업. 아이들이 조용해서 당황했지만, 발표하지 않는 아이들도 자연스러운 존재라는 걸 깨닫는다. 수업보다 더 큰 배움은 “당연함은 없다”는 반성.</p>
+      <ul class="points"><li>첫 수업 진행</li><li>조용한 학생들 앞에서 당황</li><li>내성적인 아이들에 대한 공감</li><li>치즈볼 급식으로 마무리</li></ul>
+      <div class="meta-row"><span>원문 문장 5개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTBfODEg/MDAxNzc1Nzk0MTE2ODk2.XIIP_8v65PBQHu6W4-Cuv_22TjkmY_KzggM2s-kCQxEg.LKnDR87bRbhrLcPUQCpLWiMPrJGsGxq2zUF0vcO_wgQg.JPEG/IMG_7931.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0409">
+  <div class="slide-bg"><span>🍡</span><span>0409</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 10 · 2026. 4. 9. 18:08 </div>
+      <h2>백년화편과 아침 챙김의 기적</h2>
+      <p class="summary">아침에 예쁜 떡을 받고, 밥알 씹히는 맛에 감동한다. 실습 덕분에 몇 년 만에 아침을 챙겨 먹는 사람이 되어간다.</p>
+      <ul class="points"><li>백년화편 떡 선물</li><li>친구와 맛있는 떡 이야기</li><li>아침 챙겨먹기 루틴 발생</li><li>실습이 만든 건강한 변화</li></ul>
+      <div class="meta-row"><span>원문 문장 8개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMTA1/MDAxNzgxMDI1MzI3MTYz.J035x49nGka6JjcdLI2-ftEdFaeoFFOMWFxW4QKAnFEg.OIypn1Ge-cC_839xP8S0L7O-y9JNbITZlAGy9ISEeXcg.JPEG/output_677801649.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0412">
+  <div class="slide-bg"><span>🌞</span><span>0412</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 11 · 2026. 4. 12. 21:18 </div>
+      <h2>갑자기 여름, 갑자기 하루 삭제</h2>
+      <p class="summary">갑자기 여름처럼 더워진 날. 맥모닝, 낮잠, 밀린 교육학 강의로 하루가 사라지고, 봄도 졸업도 생각보다 가까워졌음을 느낀다.</p>
+      <ul class="points"><li>날씨가 갑자기 여름</li><li>맥모닝과 낮잠</li><li>밀린 교육학 강의</li><li>졸업이 가까워진 실감</li></ul>
+      <div class="meta-row"><span>원문 문장 9개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTJfMjI0/MDAxNzc1OTk2Mjg4NzMz.dg8VYqt_DV0MMma7CZ436IoM8FsWHeeLAw9WYwtYVTcg.Tq7FzY9-u-YoNanmu3P_gx1THVqhfKksA1yJaTf_WHsg.JPEG/IMG_7968.JPG?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://phinf.pstatic.net/image.nmv/blog_2026_04_12_858/qDkBPWs7Tc_03.jpg" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0413">
+  <div class="slide-bg"><span>🧠</span><span>0413</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 12 · 2026. 4. 13. 22:20 </div>
+      <h2>불안과 설렘이 같이 있어도 괜찮다</h2>
+      <p class="summary">긍정심리학 과제를 하며 대학교 워크캠프 기억을 떠올린다. 원하는 길에도 두려움과 설렘이 함께 있다는 걸 인정하자 최근의 불안이 조금 정리된다.</p>
+      <ul class="points"><li>정적강화 기억 떠올리기</li><li>워크캠프 추억 소환</li><li>두려움과 설렘의 양가감정 인정</li><li>불안이 정리되는 하루</li></ul>
+      <div class="meta-row"><span>원문 문장 25개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTNfMTE2/MDAxNzc2MDg1MzEwNzMw.vMWqHP_2lfRboRO84jlaIzSmGEEYURge8FnkCpH9jiAg.vsNk0FuQXz5LoRgmQdYUszscgCAaCuOwxe6zEaIJL6Ug.JPEG/output_237817726.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTNfNzcg/MDAxNzc2MDg1MzcxMDA4.aw9HJkeJMswl-3pQ0XGGAc53PFgkFPYgc46TstpaR0sg.xdlBfTjQjkbydOQEkp2IkfCvQGjNi56fCOEB34PP-L4g.JPEG/output_3577472851.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTNfMjEw/MDAxNzc2MDg1MzcxMTk5.cLJYmPRvlIrVs084897S6vbvg492BBdn5-mcOAirbCYg.lm5s4qzD_t5-U5o7jUcGhyl0dK4nH1dHSbQNGVEou9Ig.JPEG/IMG_7978.jpg?type=w800" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0414">
+  <div class="slide-bg"><span>🍜</span><span>0414</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 13 · 2026. 4. 15. 14:56 </div>
+      <h2>블랙데이인데 과제는 블랙홀</h2>
+      <p class="summary">블랙데이와 맛있는 급식, 따뜻해진 날씨가 있었지만 실습 중 과제는 계속 쌓인다. 수업이 없으면 과제, 시간이 있으면 준비, 말 그대로 실습 블랙홀.</p>
+      <ul class="points"><li>블랙데이 분위기</li><li>영양사 선생님 급식 칭찬</li><li>아우터 없는 날씨</li><li>실습 중 과제 폭주</li></ul>
+      <div class="meta-row"><span>원문 문장 12개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTVfMjMz/MDAxNzc2MjI4OTQ1MTMz.1I4DKtccuGVttmCKw5-jAUv6mSaaTNNtSyHk-DWzpoIg.jPqKT-nXCVCZN2g_tyOVkpP9TytCRRoY51S4QSxW6mMg.JPEG/output_510076752.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTVfMjg5/MDAxNzc2MjI4OTg5NjAy.BCPUh3xUH61wCfzNuFGBKW7LeDktciMtBXhputRaOOog.CDHrlch0f1OEoEhe43MR3_6NRZvfRl9AftWqKy9d2mwg.JPEG/output_194206668.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0415">
+  <div class="slide-bg"><span>👏</span><span>0415</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 14 · 2026. 4. 15. 22:27 </div>
+      <h2>10개 수업 완료와 멘토링 보물상자</h2>
+      <p class="summary">5학년 2차시 수업까지 마치며 10개 수업을 완료한다. 부장 선생님들과의 멘토링에서 교수 전문성보다 깊게 남는 조언들을 얻는다.</p>
+      <ul class="points"><li>5학년 수업 10개 완료</li><li>부장 선생님들과 멘토링</li><li>교직 생활의 좋은 거름 발견</li><li>지식보다 깊은 태도의 조언</li></ul>
+      <div class="meta-row"><span>원문 문장 10개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTVfMTI5/MDAxNzc2MjU5MDAwNzcx.Qw3zt4qLknEBmO_5ujerukuvKJ_Jmkn2m7MdUUNJ-Zcg.pWl8yhzpX59zxMkVDRWLf84J5VMwOs_g3fQs4OPS3-Yg.JPEG/output_3129451311.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTVfMjE3/MDAxNzc2MjU5NjY4MjQ1.c2KLDEDNtZpDfoUWKt917GxTaX1RIBjFUOmerUT_f6Ug.k9u5D8Zye47mlaRcH3doLT5c0SbTW2t2BVYiP6117VQg.JPEG/IMG_8003.JPG?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0416">
+  <div class="slide-bg"><span>🍱</span><span>0416</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 15 · 2026. 4. 16. 16:59 </div>
+      <h2>급식이 갑자기 맛있어졌다</h2>
+      <p class="summary">동파육과 곤약무침이 예상보다 맛있었던 날. 혼자 먹은 점심이었지만 아이가 그려준 그림과 함께, “나는 편식하지 않는 사람”이라는 자기최면까지 성공한다.</p>
+      <ul class="points"><li>동파육·곤약무침 급식 호평</li><li>혼자 먹은 점심</li><li>아이가 그려준 그림</li><li>편식 안 하는 사람 선언</li></ul>
+      <div class="meta-row"><span>원문 문장 18개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTZfNzEg/MDAxNzc2MzI2MDI3ODYy.mW6j4slm62nN0kVB4T-SrvTCXNPXYrMTe8DdRw9bcFwg.H1lBTspxOyGhsBgUPdWxxj-LfFXdrNwzrTzvmt51xvEg.JPEG/output_1748754441.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTZfMjIx/MDAxNzc2MzI2MDk4ODg0.o-LR2ucn08cVJwxHWhfoAODyiJdL_I7AM_Q3x74c6-wg.E_99RW49zARwtXmlYWcUoZizoMN-8Rwq7lPQwgZW3PAg.JPEG/IMG_8007.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MTZfMjI4/MDAxNzc2MzI2MDk5MTQw.xuI4EI_QT2uRDd_hSIBMJVALyD3CTwK3e2T7bVyJCWsg.hjLgy2nSYTrtqfjE2ljW7jHCP3B8oWie4Kp_STxn_fAg.JPEG/IMG_8006.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0418">
+  <div class="slide-bg"><span>🚒</span><span>0418</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 16 · 2026. 4. 18. 21:58 </div>
+      <h2>소방훈련과 군것질의 날</h2>
+      <p class="summary">소방훈련, 수업 참관, 급식, 군것질까지 학교 이벤트가 가득했던 날. 아이들이 지도를 잘 따르는 모습에서 현장감과 귀여움을 동시에 느낀다.</p>
+      <ul class="points"><li>소방훈련 참여</li><li>수업 참관</li><li>아이들의 질서 있는 대피</li><li>군것질이 많은 하루</li></ul>
+      <div class="meta-row"><span>원문 문장 11개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MThfMTMz/MDAxNzc2NDk1NTE2NTg1.xVuhC4mTGspxxpVmrMZG4rR245SSNnG8TYxdwZJs7xEg.54cdqy_9LTXS1u2I6MpoqUqlvYqvw0lgOyHOLzcL0eEg.JPEG/output_1143222052.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MThfMjI5/MDAxNzc2NDk1NjI3Mzg3.V9QXqz8mlyrve1ox20_K2AfrfNYhv2JbUrJjaGCxSC0g.NLVKWRERxLZ4S3VQxufa9HVVwSl1DginxGNh9xGamBIg.JPEG/output_2411812628.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MThfMjcz/MDAxNzc2NDk1NTE2NzE0.TwepaOohb_l8NlHUnhucxXYmgTdYv-Iwmb5IgZB_kZgg.Yqxvk-zdCgPpBtGzPr3f4m5Q5ixUAK3cSzdPEuj_VJcg.JPEG/output_1449269206.jpg?type=w800" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0420">
+  <div class="slide-bg"><span>🥟</span><span>0420</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 17 · 2026. 4. 21. 21:55 </div>
+      <h2>얼음국 아니고 만두국입니다</h2>
+      <p class="summary">떡만두국과 오징어볶음 급식. 사진을 본 남편이 “얼음 국?”이라고 했지만 사실은 만두였고, 두바이 감자빵은 진짜 맛있었다.</p>
+      <ul class="points"><li>떡만두국 급식</li><li>남편의 얼음국 드립</li><li>오징어볶음과 나물</li><li>두바이 감자빵 발견</li></ul>
+      <div class="meta-row"><span>원문 문장 15개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjFfNTAg/MDAxNzc2Nzc1ODk3MDUz.-zsrrDXUc3e0gdtpmMvSOpeCO7mb9V0I28C574wyNLcg.1BewBriss3eRSOyQCl5ihsxQ-yYGMw4UWBzwVQvEtZAg.JPEG/output_1779400658.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjFfMjkx/MDAxNzc2Nzc1ODk3ODc1.2RPZg3l7cIXwGIemtxqalhZ3Oc6XtyTBV44QPhYqsjYg.CNrK3iPG51YlSmXkAuGszhoAwpSCfgUd9LcsuCQ0INsg.JPEG/IMG_8115.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjFfNSAg/MDAxNzc2Nzc1ODk4NDI1.KfE4VGFPJHRhTvIpgpTOf_9ug8byXseP3xIfB4ABnlgg.jfmk-OsJcSgvkEQx4GDARKzeGbknGVsDAZq9BcxAmmwg.JPEG/IMG_8114.jpg?type=w800" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0421">
+  <div class="slide-bg"><span>🫣</span><span>0421</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 18 · 2026. 4. 21. 22:07 </div>
+      <h2>스타벅스 신메뉴와 닉네임 사태</h2>
+      <p class="summary">토이스토리 신메뉴는 기대와 달리 맛없었고, 의도치 않게 스타벅스 닉네임이 공개돼 민망한 날. 결국 유린기 대신 신전 떡볶이로 마음을 달랜다.</p>
+      <ul class="points"><li>토이스토리 신메뉴 혹평</li><li>스타벅스 닉네임 공개 민망함</li><li>유린기 대신 신전 떡볶이</li><li>일상 속 소소한 사건</li></ul>
+      <div class="meta-row"><span>원문 문장 27개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjFfMTY2/MDAxNzc2Nzc2MTQ2Nzk1.8-xw-5n0YugGngYYyg6_0G5FEdkSYGw1iQzIPmlv9wog.OJT-EZM9_Ze9_S9nwBjUzhzDYq-aWSVAyVJtr5_IsMkg.JPEG/IMG_8122.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjFfMTA5/MDAxNzc2Nzc2MjUyOTk4.a3b4EA79mWC_j3wLTWDjuNOhVbLduW05Cq_YcT4E0xYg.fJ3D4UQ9I7FZTA6xNQp1EJZQUPYBG44beM8YcDIsZysg.JPEG/output_1641440011.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0422">
+  <div class="slide-bg"><span>🍬</span><span>0422</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 19 · 2026. 4. 22. 16:50 </div>
+      <h2>실습 끝이 보인다</h2>
+      <p class="summary">상상한 솥밥은 아니었지만 에그타르트는 맛있었다. 상담실 홍보 포스터 퀴즈에 참여한 아이들에게 간식을 전달하고, 실습의 끝이 보이는 걸 실감한다.</p>
+      <ul class="points"><li>솥밥 기대와 현실 차이</li><li>에그타르트 성공</li><li>상담실 포스터 퀴즈 간식 전달</li><li>실습 종료가 가까워짐</li></ul>
+      <div class="meta-row"><span>원문 문장 7개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjJfMTYg/MDAxNzc2ODQzODM2ODQ4.sVEaFJCJ_4iDL01eOdV6JarlrOg77NkcI3CajYntyJgg.-fe4W3v8IwO_HoUf5R-Ib-5WYogaU3_lPbBJHh9Ggmsg.JPEG/output_1163992079.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0423">
+  <div class="slide-bg"><span>🍈</span><span>0423</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 20 · 2026. 4. 25. 14:18 </div>
+      <h2>신사에서 먹고 웃고 좋은 소식 듣기</h2>
+      <p class="summary">친구들을 만나러 신사에 가서 루미큐브, 맛집, 멜론빙수까지 달린 날. 매번 만날 때마다 좋은 소식이 있다는 따뜻한 모임의 기록.</p>
+      <ul class="points"><li>루미큐브 구경</li><li>닉네임 변경 후유증</li><li>신사 맛집과 폭식</li><li>친구들의 좋은 소식</li></ul>
+      <div class="meta-row"><span>원문 문장 13개 요약</span><span>이미지 9개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjRfNjIg/MDAxNzc3MDE4NjUzNDM4.z6w6-XmIiA12AtHDRqUpG8du8zlnfUyEvj9PiJ2Ou48g.Of35wF3iGmGSzR8NpxHHKLTdG3nC5yOfZ1_X42Q7Whsg.JPEG/IMG_8141.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjRfMTY2/MDAxNzc3MDE4NjUyNzA2.beO0MU7NUXFdsFCX3mRFLqzT4UbdUoLMw5btsqioI9Ag.h9uIpOCl0c2EjDCVEEwb0T46Rcq9aiHDpKpEZGT799cg.JPEG/IMG_8139.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjVfNzkg/MDAxNzc3MDk0MTAyNzMx.gBjOAgOV1kFqzobPmL8B6mReq-bnYt1DVd0q_QOcBCYg.RKuELw1ERdoSMB5mihhDOR2B0YgWBQ-vaCIdYyYDt1Yg.JPEG/IMG_8145.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0424">
+  <div class="slide-bg"><span>😭</span><span>0424</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 21 · 2026. 4. 25. 14:22 </div>
+      <h2>교생 마지막 날, 시원섭섭 엔딩</h2>
+      <p class="summary">대망의 마지막 날. 선생님들 덕분에 4주를 잘 마치고 많은 경험을 얻었다. 가벼운 듯 깊었던 실습이 시원섭섭하게 막을 내린다.</p>
+      <ul class="points"><li>교생 실습 마지막 날</li><li>양원 블루리본 맛집 발견</li><li>선생님들에 대한 감사</li><li>4주 경험의 마무리</li></ul>
+      <div class="meta-row"><span>원문 문장 15개 요약</span><span>이미지 6개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjVfNzUg/MDAxNzc3MDk0MzE3NjE4.39LlD74QRIU1OkmrZ3Xt83AEkLSfcqXYjXoF0kxRQEsg.pGEkWxdQy2zFE0PD-wX8Jp4R2E1G5OIxjnyIhrqTuvEg.JPEG/IMG_8170.JPG?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjVfMjk0/MDAxNzc3MDk0MzQ4NjI4.E2hQfxVfrHWrY22IiHyasRHLcs-qkMzsEk9_wBlOK2Ug.4C8M4by6GbveBAKbiBMCWrC-HlDSFvbVOztS1PEYG7Ug.JPEG/IMG_8156.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjVfODQg/MDAxNzc3MDk0MzQ4NzEx.LZ2gvlSiJE71XefuKhHKTb3_R7x_NdfmgxQMAOWBXIgg.t_YZR3fHh_7RkNI2b2o-Tq-Dg4drO7ReTzyAdf4BBGcg.JPEG/IMG_8158.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0425">
+  <div class="slide-bg"><span>🏆</span><span>0425</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 22 · 2026. 4. 28. 16:38 </div>
+      <h2>인스파이어 T1 홈그라운드 원정</h2>
+      <p class="summary">인스파이어 T1 홈그라운드에 다녀온 날. 멀미와 학원 결석 죄책감은 있었지만, 현장감과 팬심이 섞인 특별한 외출로 기억된다.</p>
+      <ul class="points"><li>인스파이어 T1 홈그라운드 방문</li><li>중간 휴게소 식사</li><li>학원 빠지는 죄책감</li><li>팬심 가득한 하루</li></ul>
+      <div class="meta-row"><span>원문 문장 22개 요약</span><span>이미지 8개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjlfMTU4/MDAxNzc3NDUwNjc0MTIy.SikW4t0-cwEd3LJrVesaqnKCNF8lVTAhOZMNqkgLFPUg.CGujq-XG-ISByAZa-UrFs_cDvS7bPUqlTDqdDegYleQg.JPEG/output_2043745227.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjlfMjA3/MDAxNzc3NDUwNjc0MDg2.i5UOVYb6HyNCA9C_aUS6Av--NAXewbkSiZNWW1xFEHUg.myUBQfYCRpR3tS7rOkRkjdDM5Ef6Kr8tIVOsjM3CS5Yg.JPEG/output_1052778048.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjlfMjA4/MDAxNzc3NDUwNzk4OTQw.16tFkw_rrenfQc9z6j-ThQxKK42SPUP78cG4hSqOcikg.f01T8tJZrWfmH1vaebTmgu8Pn4UKEGPBPd1XavhdMGQg.JPEG/IMG_8200.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0428">
+  <div class="slide-bg"><span>💊</span><span>0428</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 23 · 2026. 4. 28. 16:38 </div>
+      <h2>4월 공백을 메우는 회복일</h2>
+      <p class="summary">수업이 없는 날, 밀린 강의와 공부를 따라잡으려 애쓴다. 실습 후 컨디션과 피부염까지 겹쳤지만, 목표를 다시 세우며 회복을 시도한다.</p>
+      <ul class="points"><li>밀린 강의 따라잡기</li><li>4월 공백의 압박</li><li>피부염과 항생제</li><li>스트레스에도 살은 안 빠지는 아이러니</li></ul>
+      <div class="meta-row"><span>원문 문장 14개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://phinf.pstatic.net/image.nmv/blog_2026_04_29_1791/AfBI6Tk54f_03.jpg" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0430">
+  <div class="slide-bg"><span>🫡</span><span>0430</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 24 ·2026. 4. 30. 16:58</div>
+      <h2>졸업시험 합격!</h2>
+      <p class="summary">드디어 졸업시험 합격. 이 모든 우왕좌왕의 결론은 단순하지만 강력하다: 이제 문제를 잘 읽는 사람이 되자.</p>
+      <ul class="points"><li>졸업시험 합격</li><li>감사와 안도</li><li>문제 잘 읽기 다짐</li><li>으아아</li></ul>
+      <div class="meta-row"><span>원문 문장 3개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA0MzBfMTQ5/MDAxNzc3NTM1OTEwNTk0.YGvZSNPz-g67KcRVrnZtumgECyQm5iyKovyis7rk2iAg.WHqoSr3l4lPBI0uYDwKoRkEr0d5-RbC9c22YEHPpzgAg.JPEG/output_3267889305.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide chapter">
+  <div class="big-emoji">🏡</div>
+  <div class="chapter-copy reveal">
+    <p class="kicker">CHAPTER</p>
+    <h1>3막. 합격 이후의 일상 회복</h1>
+    <p>5월과 6월은 실습의 긴장감이 빠지고, 가족·친구·외출·여행으로 다시 생활의 색이 돌아오는 구간입니다.</p>
+    <div class="chapter-stat">7개 글 · 공부 일상과 회복의 장면들</div>
+  </div>
+  <div class="mini-grid reveal delay-1"><div class="mini"><b>0505</b><span>어린이날 낮잠 대작전</span></div><div class="mini"><b>0509</b><span>사람 스트레스는 공부보다 세다</span></div><div class="mini"><b>0513</b><span>옥반지 원정대 출동</span></div><div class="mini"><b>0519</b><span>예식사진과 4월 기록의 의미</span></div><div class="mini"><b>0527</b><span>오랜만의 이태원, 체력 경고등</span></div><div class="mini"><b>0601</b><span>매직 실패 후 광명 찾기</span></div><div class="mini"><b>0603</b><span>여주 해슬리햄릿 방문기</span></div></div>
+</section>
+<section class="slide post" data-key="0505">
+  <div class="slide-bg"><span>😴</span><span>0505</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 25 · 2026. 5. 5. 20:47 </div>
+      <h2>어린이날 낮잠 대작전</h2>
+      <p class="summary">더현대 쇼핑 계획은 피곤함에 밀려 6시까지 잠으로 대체된다. 대신 두부나베와 대구 콩국으로 배를 채우며 연휴다운 하루를 보낸다.</p>
+      <ul class="points"><li>어린이날 쇼핑 계획 실패</li><li>둘 다 6시까지 늦잠</li><li>양지 두부나베</li><li>직접 만든 대구 콩국</li></ul>
+      <div class="meta-row"><span>원문 문장 9개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MDVfNzIg/MDAxNzc3OTgxNTYzMDc4.UHz_8PgvW6UA-8jUjEde9XMZd9OTlL7IwAbii8lOYAUg.HV1wis5jOL__s2vF7NFy3tet5ssiqxs6AA2GwgvDOHkg.JPEG/output_452668102.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://phinf.pstatic.net/image.nmv/blog_2026_05_05_3023/B8EMZ2jVnC_01.jpg" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0509">
+  <div class="slide-bg"><span>🫠</span><span>0509</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 26 ·2026. 5. 9. 22:22</div>
+      <h2>사람 스트레스는 공부보다 세다</h2>
+      <p class="summary">공부보다 외부 사람에게서 오는 스트레스가 더 크게 느껴진 날. 답은 멀리 있지 않고, 그냥 푹 쉬는 것.</p>
+      <ul class="points"><li>스트레스가 심했던 날</li><li>공부보다 사람의 영향이 큼</li><li>휴식 필요성 자각</li><li>공부가 아니라 외부의 그것도 사람이</li></ul>
+      <div class="meta-row"><span>원문 문장 4개 요약</span><span>이미지 1개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery one"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMjg1/MDAxNzgxMDI1MjM0NTM0.PBBeReUufDF97-rLTmP9oq5g6Ez5WzUvzhv3MwGP5XYg.OpFweY_omv0clzDqjvFOrUXlH2_vWZCgUrbuXLz-Npcg.JPEG/IMG_8808.JPG?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0513">
+  <div class="slide-bg"><span>💍</span><span>0513</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 27 · 2026. 5. 13. 19:21 </div>
+      <h2>옥반지 원정대 출동</h2>
+      <p class="summary">엄마가 갖고 싶다던 옥반지를 찾으러 종로까지 다녀온다. 라벤더 비치와 원석 반지를 고르며 반복되는 공부 일상에 작은 이벤트가 생긴다.</p>
+      <ul class="points"><li>엄마를 위한 종로 방문</li><li>옥반지 색상과 종류 구경</li><li>라벤더 비치·원석 반지 선택</li><li>반복되는 공부 일상 속 이벤트</li></ul>
+      <div class="meta-row"><span>원문 문장 12개 요약</span><span>이미지 2개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery two"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MTNfMjAw/MDAxNzc4NjY3MzYxMDgx.jDdF94eo5-78YXvApfy90VskiJM80eNl6DBFCN8tMoYg.qo1txpgCSRPAm4Xf1W91iYfV4I81ahmXRlISfjQ0OjQg.JPEG/output_2826244303.jpg?type=w400" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MTNfMjQw/MDAxNzc4NjY3MzYwOTQx.3FFMkDx9t-FhmVqHRJd6_HS-uKENItXJlBtGN2_HqIAg.NFbL4mCkNWUrrAfpFo8K9wbOgDtWd2-PnvTF5cdhsNgg.JPEG/output_327856417.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0519">
+  <div class="slide-bg"><span>👰🏻‍♀️</span><span>0519</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 28 · 2026. 5. 19. 19:19 </div>
+      <h2>예식사진과 4월 기록의 의미</h2>
+      <p class="summary">오랜만에 예식사진을 꺼내본 날. 실습 때는 숙제처럼 매일 썼지만, 공부만 하니 블로그가 뜸해져서 4월 기록을 남겨둔 게 다행이라고 느낀다.</p>
+      <ul class="points"><li>예식사진 회상</li><li>실습 때의 매일 기록</li><li>공부 일상으로 블로그 빈도 감소</li><li>4월 기록의 소중함</li></ul>
+      <div class="meta-row"><span>원문 문장 7개 요약</span><span>이미지 6개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MTlfOSAg/MDAxNzc5MTg1Njc5NDA3.irbUU9W5SyKHuKMe8jDgQNvx42KB3lrE1v8EQZ0ssqQg.g1EtLSYhiXqBhd67Dv85YNEwgbEME4vAc0mDNmWkdUMg.JPEG/IMG_5889.JPG?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MTlfOTYg/MDAxNzc5MTg1Njc5NjQ0.TI2bT67Lf3qATGwy23RnhQiNXFXuMb0B3GjEuj_BclQg.VSOzqeHMBIJPj8zOycaeaMtvq3CkzjWmWOJnmamuoxkg.JPEG/IMG_6026.JPG?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA1MTlfMjUx/MDAxNzc5MTg1NjgwMDI3.NNaz1KlryCBuCO9lSPw5KyrC_YpPStUW104qDOOZGKEg.u02x4vaYEHCrfSob60H81jz4zsah102n7HZNodbJtTog.JPEG/IMG_5926.JPG?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0527">
+  <div class="slide-bg"><span>🌃</span><span>0527</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 29 · 2026. 5. 27. 23:39 </div>
+      <h2>오랜만의 이태원, 체력 경고등</h2>
+      <p class="summary">이태원에서 오랜만에 즐거운 시간을 보냈지만, 야외 저녁 사진의 빛번짐과 누적 피로가 신경 쓰인다. 즐거움과 체력관리 필요성이 같이 남은 날.</p>
+      <ul class="points"><li>이태원 외출</li><li>카메라 빛번짐 고민</li><li>친구들과 즐거운 만남</li><li>체력관리 필요성</li></ul>
+      <div class="meta-row"><span>원문 문장 7개 요약</span><span>이미지 5개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfNzcg/MDAxNzgxMDI0ODU3NTQx.UeqsPi08Ludo0ULidEaM25OxtzP6PsIT_o3zLz4a3VEg.yfxt9k2wdG2kU9rQtWSQSCmM0St3TtLnLWO3aA6oUNgg.JPEG/IMG_8552.jpg?type=w400" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfNDUg/MDAxNzgxMDI0ODU3MTMx.Kb_-nKXyDVshjFo19nMs0kIwlORAtRH7D0y2Xte2-3sg.5H_DhGL6Ga2BseSe9QMZH13YPCKFwA0KBSlgx_uBQaQg.JPEG/IMG_8553.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfNjYg/MDAxNzgxMDI0ODU3MzIx.bKvYCz9MKJEfrZ5V2mCKLCQA2xgmLD7cOxhE38m6R3wg.uVDPpZRDXiG1zx_Deq69UeR28vqHDqN-_upO5r28QQYg.JPEG/IMG_8551.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0601">
+  <div class="slide-bg"><span>✨</span><span>0601</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 30 · 2026. 6. 1. 23:27 </div>
+      <h2>매직 실패 후 광명 찾기</h2>
+      <p class="summary">동네 미용실 매직 실패로 밤샐 만큼 스트레스를 받았지만, 케라틴매직으로 구조된다. 헤어 재난이 해피엔딩으로 바뀐 날.</p>
+      <ul class="points"><li>2주 연속 매직</li><li>정수리 손상 스트레스</li><li>케라틴매직으로 회복</li><li>신기한 미용실 인연</li></ul>
+      <div class="meta-row"><span>원문 문장 9개 요약</span><span>이미지 3개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MDFfMjM3/MDAxNzgwMzIzOTUyOTY1.SnJ3zXUjtxOqWFYcQurqsHASSwIB8bBoNFPb4VOgMt8g.JCWiPIoh1djX7XyUo_vFhS7VoKqe3POMrTCr9T5h_hQg.JPEG/IMG_8676.jpg?type=w800" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MDFfNjYg/MDAxNzgwMzIzODkxNTU4.fPouvf5KP70AHpU-N2jqq6qt32EZxy87OttD7kOdMiwg.jN0NCcZwwTaqC0T2TN-SefdYF4AZHgfbzLnb9-tqw_Yg.JPEG/output_1357543496.jpg?type=w400" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MDFfNzkg/MDAxNzgwMzIzODM2NTUx.5ATPoo_7_LiB-rfe6TViQcZ2mD2A1-ZrB7mOjtu0rzUg.NlIAm7VZnMEbTBnv54RVWZGiCBNJ5JU5tsr39691XbYg.JPEG/output_4211869126.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide post" data-key="0603">
+  <div class="slide-bg"><span>🏡</span><span>0603</span></div>
+  <div class="post-layout">
+    <article class="story-card reveal">
+      <div class="eyebrow">DAY 31 ·2026. 6. 3. 23:51</div>
+      <h2>여주 해슬리햄릿 방문기</h2>
+      <p class="summary">투표 후 여주 해슬리햄릿으로 떠난 날. 생각보다 가까웠고, 다음엔 아울렛보다 숙소에 더 오래 머물러야겠다는 교훈까지 얻은 힐링 외출.</p>
+      <ul class="points"><li>투표 후 여주 이동</li><li>해슬리햄릿 방문</li><li>예상보다 가까운 거리</li><li>다음엔 숙소에 더 오래 머물기</li></ul>
+      <div class="meta-row"><span>원문 문장 14개 요약</span><span>이미지 13개 중 대표 사용</span></div>
+    </article>
+    <aside class="visual-card reveal delay-1">
+      <div class="gallery three"><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMTk2/MDAxNzgxMDI0NDEwNjY2.rZ79erTQXJBwbjUHJWc5epnYDaXzRby6L6cJ3yycnXcg.RTu14DBE6fiZMqPPNLVruP_pj0ZpQDNcDYQMfnlhXLkg.JPEG/IMG_8688.jpg?type=w400" alt="블로그 이미지 1" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 1</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMjk1/MDAxNzgxMDI0NDEwNTQ4.okex41XcH1gkevGxOnXXmVh0mM7BKFU655FRryKUKs8g.HI_boMIaSBqT89eEQVtBKZPmD3-9zQ78fnywPJkbtY0g.JPEG/IMG_8685.jpg?type=w800" alt="블로그 이미지 2" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 2</figcaption></figure><figure><img src="https://mblogthumb-phinf.pstatic.net/MjAyNjA2MTBfMTU2/MDAxNzgxMDI0NDExMDEw.xtvClYzeI6anA9BbAXBbtaSb8qfrp1qhSLIJA2449Rgg.0FrOHltQuDd2XFT_u5m3lRlo-1iev6X4ElJULqUbWE8g.JPEG/IMG_8689.jpg?type=w400" alt="블로그 이미지 3" loading="lazy" onerror="this.closest('figure').classList.add('broken')"><figcaption>scene 3</figcaption></figure></div>
+    </aside>
+  </div>
+</section>
+<section class="slide finale">
+  <div class="final-card reveal">
+    <p class="kicker">EPILOGUE</p>
+    <h1>결론: 이 블로그는 “잘 버틴 사람”의 기록이다</h1>
+    <p>처음엔 과제 때문에 시작했지만, 결과적으로는 불안·실습·시험·급식·사람·외출이 전부 남았습니다. 매일 대단한 사건이 없어도, 하루를 붙잡아두면 한 학기의 이야기가 됩니다.</p>
+    <div class="final-grid">
+      <div><b>가장 큰 갈등</b><span>교생과 졸업시험을 동시에 버티기</span></div>
+      <div><b>가장 큰 반전</b><span>급식이 점점 맛있어짐</span></div>
+      <div><b>가장 큰 성장</b><span>아이들을 ‘당연함’ 없이 바라보기</span></div>
+      <div><b>가장 큰 엔딩</b><span>졸업시험 합격, 그리고 일상 복귀</span></div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="dots" id="dots"><button class="dot" data-target="0" aria-label="1번 슬라이드"></button><button class="dot" data-target="1" aria-label="2번 슬라이드"></button><button class="dot" data-target="2" aria-label="3번 슬라이드"></button><button class="dot" data-target="3" aria-label="4번 슬라이드"></button><button class="dot" data-target="4" aria-label="5번 슬라이드"></button><button class="dot" data-target="5" aria-label="6번 슬라이드"></button><button class="dot" data-target="6" aria-label="7번 슬라이드"></button><button class="dot" data-target="7" aria-label="8번 슬라이드"></button><button class="dot" data-target="8" aria-label="9번 슬라이드"></button><button class="dot" data-target="9" aria-label="10번 슬라이드"></button><button class="dot" data-target="10" aria-label="11번 슬라이드"></button><button class="dot" data-target="11" aria-label="12번 슬라이드"></button><button class="dot" data-target="12" aria-label="13번 슬라이드"></button><button class="dot" data-target="13" aria-label="14번 슬라이드"></button><button class="dot" data-target="14" aria-label="15번 슬라이드"></button><button class="dot" data-target="15" aria-label="16번 슬라이드"></button><button class="dot" data-target="16" aria-label="17번 슬라이드"></button><button class="dot" data-target="17" aria-label="18번 슬라이드"></button><button class="dot" data-target="18" aria-label="19번 슬라이드"></button><button class="dot" data-target="19" aria-label="20번 슬라이드"></button><button class="dot" data-target="20" aria-label="21번 슬라이드"></button><button class="dot" data-target="21" aria-label="22번 슬라이드"></button><button class="dot" data-target="22" aria-label="23번 슬라이드"></button><button class="dot" data-target="23" aria-label="24번 슬라이드"></button><button class="dot" data-target="24" aria-label="25번 슬라이드"></button><button class="dot" data-target="25" aria-label="26번 슬라이드"></button><button class="dot" data-target="26" aria-label="27번 슬라이드"></button><button class="dot" data-target="27" aria-label="28번 슬라이드"></button><button class="dot" data-target="28" aria-label="29번 슬라이드"></button><button class="dot" data-target="29" aria-label="30번 슬라이드"></button><button class="dot" data-target="30" aria-label="31번 슬라이드"></button><button class="dot" data-target="31" aria-label="32번 슬라이드"></button><button class="dot" data-target="32" aria-label="33번 슬라이드"></button><button class="dot" data-target="33" aria-label="34번 슬라이드"></button><button class="dot" data-target="34" aria-label="35번 슬라이드"></button><button class="dot" data-target="35" aria-label="36번 슬라이드"></button><button class="dot" data-target="36" aria-label="37번 슬라이드"></button></div>
+<div class="controls"><button id="prev">←</button><span class="counter" id="counter">1 / 37</span><button id="next">→</button></div>
+<script>
+const deck=document.getElementById('deck');
+const slides=[...document.querySelectorAll('.slide')];
+const progress=document.getElementById('progress');
+const counter=document.getElementById('counter');
+const dots=[...document.querySelectorAll('.dot')];
+let current=0;
+function go(i){current=Math.max(0,Math.min(slides.length-1,i));slides[current].scrollIntoView({behavior:'smooth',block:'start'});}
+function update(){
+  const top=deck.scrollTop;
+  let best=0,dist=Infinity;
+  slides.forEach((s,i)=>{const d=Math.abs(s.offsetTop-top);if(d<dist){dist=d;best=i;}});
+  current=best;
+  counter.textContent=(current+1)+' / '+slides.length;
+  progress.style.width=((current+1)/slides.length*100)+'%';
+  dots.forEach((d,i)=>d.classList.toggle('active',i===current));
+}
+const io=new IntersectionObserver(entries=>{entries.forEach(en=>{if(en.isIntersecting)en.target.classList.add('show')})},{root:deck,threshold:.25});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.getElementById('next').onclick=()=>go(current+1);
+document.getElementById('prev').onclick=()=>go(current-1);
+dots.forEach((d,i)=>d.onclick=()=>go(i));
+deck.addEventListener('scroll',()=>requestAnimationFrame(update));
+document.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(current+1)} if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current-1)}});
+update();
+</script>
+</body>
+</html>
